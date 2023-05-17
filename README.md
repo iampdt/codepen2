@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# PostCSS HWB Function [<img src="https://postcss.github.io/postcss/logo.svg" alt="PostCSS Logo" width="90" height="90" align="right">][postcss]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[<img alt="npm version" src="https://img.shields.io/npm/v/@csstools/postcss-hwb-function.svg" height="20">][npm-url]
+[<img alt="CSS Standard Status" src="https://cssdb.org/images/badges/hwb-function.svg" height="20">][css-url]
+[<img alt="Build Status" src="https://github.com/csstools/postcss-plugins/workflows/test/badge.svg" height="20">][cli-url]
+[<img alt="Discord" src="https://shields.io/badge/Discord-5865F2?logo=discord&logoColor=white">][discord]
 
-## Available Scripts
 
-In the project directory, you can run:
+[PostCSS HWB Function] lets you use `hwb` color functions in
+CSS, following the [CSS Color] specification.
 
-### `npm start`
+```pcss
+a {
+	color: hwb(194 0% 0%);
+	color: hwb(194 0% 0% / .5);
+}
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+/* becomes */
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+a {
+	color: rgb(0, 195, 255);
+	color: rgba(0, 195, 255, .5);
+}
+```
 
-### `npm test`
+## Usage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Add [PostCSS HWB Function] to your project:
 
-### `npm run build`
+```bash
+npm install postcss @csstools/postcss-hwb-function --save-dev
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Use it as a [PostCSS] plugin:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```js
+const postcss = require('postcss');
+const postcssHWBFunction = require('@csstools/postcss-hwb-function');
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+postcss([
+  postcssHWBFunction(/* pluginOptions */)
+]).process(YOUR_CSS /*, processOptions */);
+```
 
-### `npm run eject`
+[PostCSS HWB Function] runs in all Node environments, with special
+instructions for:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+| [Node](INSTALL.md#node) | [PostCSS CLI](INSTALL.md#postcss-cli) | [Webpack](INSTALL.md#webpack) | [Create React App](INSTALL.md#create-react-app) | [Gulp](INSTALL.md#gulp) | [Grunt](INSTALL.md#grunt) |
+| --- | --- | --- | --- | --- | --- |
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Options
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### preserve
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The `preserve` option determines whether the original functional color notation
+is preserved. By default, it is not preserved.
 
-## Learn More
+```js
+postcssHWBFunction({ preserve: true })
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```pcss
+a {
+	color: hwb(194 0% 0%);
+	color: hwb(194 0% 0% / .5);
+}
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+/* becomes */
 
-### Code Splitting
+a {
+	color: rgb(0, 195, 255);
+	color: hwb(194 0% 0%);
+	color: rgba(0, 195, 255, .5);
+	color: hwb(194 0% 0% / .5);
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+[cli-url]: https://github.com/csstools/postcss-plugins/actions/workflows/test.yml?query=workflow/test
+[css-url]: https://cssdb.org/#hwb-function
+[discord]: https://discord.gg/bUadyRwkJS
+[npm-url]: https://www.npmjs.com/package/@csstools/postcss-hwb-function
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[CSS Color]: https://drafts.csswg.org/css-color/#the-hwb-notation
+[Gulp PostCSS]: https://github.com/postcss/gulp-postcss
+[Grunt PostCSS]: https://github.com/nDmitry/grunt-postcss
+[PostCSS]: https://github.com/postcss/postcss
+[PostCSS Loader]: https://github.com/postcss/postcss-loader
+[PostCSS HWB Function]: https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-hwb-function
